@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  
+
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
@@ -12,7 +12,8 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+          
       - name: Push to Hugging Face
-        run: |
-          git pull origin main
-          git push https://huggingface.co/spaces/shammulu/ai-travel-planner main
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: git push --force https://shammulu:$HF_TOKEN@huggingface.co/spaces/shammulu/ai-travel-planner main
